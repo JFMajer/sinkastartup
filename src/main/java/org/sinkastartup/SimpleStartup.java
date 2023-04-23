@@ -1,5 +1,7 @@
 package org.sinkastartup;
 
+import java.util.Arrays;
+
 public class SimpleStartup {
     // declare array of int to hold cell location
     private int[] cellLocation = new int[7];
@@ -21,11 +23,16 @@ public class SimpleStartup {
         if (cellLocation[guess] == 1) {
             numOfHits++;
             if (numOfHits == 3) {
+                cellLocation[guess] = -1;
                 return "kill";
             } else {
+                cellLocation[guess] = -1;
                 return "hit";
             }
-        } else {
+        } else if (cellLocation[guess] == -1) {
+            return "already hit";
+        }
+        else {
             return "miss";
         }
     }
@@ -33,6 +40,11 @@ public class SimpleStartup {
     // getter for cellLocation
     public int[] getCellLocation() {
         return cellLocation;
+    }
+
+    // getter for numOfHits
+    public int getNumOfHits() {
+        return numOfHits;
     }
 
 }

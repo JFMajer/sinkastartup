@@ -1,5 +1,8 @@
 package org.sinkastartup;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
@@ -7,10 +10,43 @@ public class Main {
         // initialize SimpleStartup class
         SimpleStartup simpleStartup = new SimpleStartup();
 
-        //initialize an array of ints
-        int[] myArray = simpleStartup.getCellLocation();
-        for (int i : myArray) {
-            System.out.print(i);
+        //initialize an array of chars of length 7
+        String[] grid = new String[7];
+        Arrays.fill(grid, "[ ]");
+
+        boolean gameOver = false;
+        int userGuess;
+        while (!gameOver) {
+            printInfo(grid);
+            userGuess = getUserInput();
+            String state = simpleStartup.checkYourself(userGuess);
+            if (simpleStartup.getNumOfHits() == 3) {
+                gameOver = true;
+                System.out.println("You win!");
+            }
+            if (state.equals("hit")) {
+                grid[userGuess] = "[X]";
+            } else if (state.equals("miss")) {
+                grid[userGuess] = "[O]";
+            }
         }
     }
+
+    // function that prints information
+    public static void printInfo(String[] grid) {
+        for (String ele : grid) {
+            System.out.print(ele);
+        }
+        System.out.println();
+    }
+
+    // function that gets user input
+    public static int getUserInput() {
+        System.out.println("Enter a number between 1 and 7: ");
+        Scanner sc=new Scanner(System.in);
+        int guess = sc.nextInt();
+        return guess - 1;
+    }
+
 }
+
